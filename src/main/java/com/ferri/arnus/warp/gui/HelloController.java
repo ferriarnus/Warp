@@ -25,6 +25,7 @@ public class HelloController {
         GameInstance instance = new GameInstance("test", "1.18.2");
         instance.makeVersion();
         instance.makeJson();
+        instance.injectProfile();
     }
 
     protected void makeInstance() {
