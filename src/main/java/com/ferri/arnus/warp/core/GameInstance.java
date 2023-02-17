@@ -16,14 +16,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+
+import static com.ferri.arnus.warp.core.Constants.*;
 
 
 public class GameInstance {
@@ -38,13 +34,13 @@ public class GameInstance {
     }
 
     public void makeJson() {
+        File instance = new File(INSTANCELOC, name);
+        instance.mkdirs();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
         LocalDateTime  localDateTime  = LocalDateTime .now();
-        this.profile = new Instance.Profile(dtf.format(localDateTime), "Crafting_Table", dtf.format(localDateTime), version, name, "custom");
+        this.profile = new Instance.Profile(dtf.format(localDateTime), instance.getAbsolutePath(), "", "Crafting_Table", dtf.format(localDateTime), version, name, "custom");
         Instance gameInstance = new Instance(name, version, profile);
         try {
-            File instance = new File(Warp.INSTANCELOC, name);
-            instance.mkdirs();
             File json = new File(instance, "\\instance.json");
             FileWriter writer = new FileWriter(json);
             writer.write(Util.GSON.toJson(gameInstance));
@@ -55,10 +51,10 @@ public class GameInstance {
     }
 
     public void makeVersion() {
-        File versions = new File(Warp.MINECRAFTLOC, "versions\\" + version);
+        File versions = new File(MINECRAFTLOC, "versions\\" + version);
         versions.mkdirs();
         File json = new File(versions, version +".json");
-        VersionList list = DownloadUtils.getVersionList("https://launchermeta.mojang.com/mc/game/version_manifest.json");
+        VersionList list = DownloadUtils.getVersionList(VANILLAVERSIONS);
         if (list != null) {
             String url = list.getUrl(version);
             if (url != null) {
@@ -74,8 +70,12 @@ public class GameInstance {
         }
     }
 
+    public void getLibraries() {
+        File lib = new File(MINECRAFTLOC, "libraries");
+    }
+
     public void injectProfile() {
-        File json = new File(Warp.MINECRAFTLOC, "launcher_profiles.json");
+        File json = new File(MINECRAFTLOC, "launcher_profiles.json");
         JsonObject profiles = null;
         try {
             profiles = JsonParser.parseReader(new InputStreamReader(new FileInputStream(json), StandardCharsets.UTF_8)).getAsJsonObject();

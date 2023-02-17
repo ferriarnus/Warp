@@ -6,10 +6,10 @@ import javafx.scene.control.Label;
 
 import java.io.IOException;
 
-import static com.ferri.arnus.warp.core.Warp.MINECRAFTLOC;
+import static com.ferri.arnus.warp.core.Constants.MINECRAFTEXE;
+import static com.ferri.arnus.warp.core.Constants.MINECRAFTLOC;
 
 public class HelloController {
-    public static final String MINECRAFTEXE = "C:\\\\Program Files (x86)\\\\Minecraft Launcher\\\\MinecraftLauncher.exe";
     @FXML
     private Label welcomeText;
 
@@ -22,7 +22,7 @@ public class HelloController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        GameInstance instance = new GameInstance("test", "1.18.2");
+        GameInstance instance = new GameInstance("test", "fabric-loader-0.14.9-1.18.2");
         instance.makeVersion();
         instance.makeJson();
         instance.injectProfile();

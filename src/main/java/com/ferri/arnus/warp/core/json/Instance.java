@@ -16,6 +16,8 @@ public class Instance {
     public static class Profile {
 
         public String created;
+        public String gameDir;
+        public String javaArgs;
         public String icon;
         public String lastUsed;
         public String lastVersionId;
@@ -23,8 +25,10 @@ public class Instance {
         public String type;
 
 
-        public Profile(String created, String icon, String lastUsed, String lastVersionId, String name, String type) {
+        public Profile(String created, String gameDir, String javaArgs, String icon, String lastUsed, String lastVersionId, String name, String type) {
             this.created = created;
+            this.gameDir = gameDir;
+            this.javaArgs = javaArgs;
             this.icon = icon;
             this.lastUsed = lastUsed;
             this.lastVersionId = lastVersionId;
